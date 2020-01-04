@@ -207,4 +207,46 @@ localhost:3000 으로 접속시 create-react-app 이 실행된 것을 확인할 
 * JSX 문법
 * 타입스크립트, 플로 타입 시스템
 
+## 1.4 CSS 작성 방법 결정하기
+
+### 1.4.1 일반적인 css 파일로 작성
+-> 단점 : 클래스명이 중복될 수 있다.
+
+### 1.4.2 css-module로 작성하기
+-> 장점: 클래스명의 중복을 막을 수 있다.
+
+### 1.4.3 Sass로 작성하기
+-> Sass 문법에 있는 변수, 믹스인을 사용하면 스타일 코드 재사용이 가능하다.
+-> create-react-app 에는 Sass를 사용하기 위해 node-sass 패키지를 설치해야한다.
+
+``` npm install node-sass ```
+
+```
+$sizeNormal: 100px;
+
+.box{
+    width: $sizeNormal;
+    height: 80px;
+}
+
+.button {
+    width: $sizeNormal;
+    height: 50px;
+}
+```
+
+### 1.4.4 css-in-js로 작성하기
+-> js 파일 안에 css 를 작성하는 방법
+
+## 1.5 단일 페이지 어플리케이션 (SPA: Single Page Application)
+-> 최초 요청 시 서버에서 첫 페이지를 처리하고 이후의 라우팅은 클라이언트에서 처리하는 웹 어플리케이션
+
+### SPA 기능 구현에 필요한 기능
+* JS에서 브라우저로 페이지 전환 요청을 보낼 수 있다. (브라우저는 서버로 요청을 보내지 않는다.)
+* 브라우저의 뒤로 가기와 같은 사용자의 페이지 전화 요청을 JS에서 처리할 수 있다.
+* 브라우저 API : pushState, replaceState 함수, pop,state 이벤트
+
+
+### react-router-dom
+-> 브라우저 히스토리 API를 이용하여 페이지 라우팅 처리를 직접 구현할 수 있다.
 
