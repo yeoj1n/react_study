@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import 'styles/common.css';
 
 function Movie({id, year, title, genres, poster, summary}) {
     return(
@@ -15,7 +14,6 @@ function Movie({id, year, title, genres, poster, summary}) {
                     {genres.map((genre, idx) => (
                         <li className="genre__genre">
                             {idx + 1} : {genre}
-                            
                         </li>
                     ))}
                 </ul>
