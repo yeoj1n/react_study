@@ -1,5 +1,7 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import "./App.css";
+import axios from 'axios';
+import useInput from './useInput';
 
 /*
 class 타입
@@ -24,7 +26,7 @@ class App extendsComponent {
   }
 }
 */
-
+/*
 const App = () => {
   // [value, how to modify value], useState : array returns
   const [count, setCount] = useState(0);
@@ -49,6 +51,7 @@ export default App;
 import React, { Component, useState, useEffect } from "react";
 import "./App.css";
 import axios from "axios";
+*/
 /*
 class 타입
 class App extendsComponent {
@@ -96,17 +99,6 @@ const App = () => {
 };
 */
 
-function useInput(defaultValue) {
-  const [value, setValue] = useState(defaultValue);
-
-  const onChanage = e => {
-    const { value } = e.target;
-    setValue(value);
-  };
-
-  return { value, onChanage };
-}
-
 function useFetch(url) {
   const [payload, setPayload] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -138,13 +130,15 @@ function useFetch(url) {
   return { payload, loading, error };
 }
 function App() {
-  const name = useInput("");
+  //const name = useInput("");
+  const maxLen = value => value.length < 10;
+  const name = useInput("Ms.", maxLen);
   const { payload, loading, error } = useFetch("https://aws.random.cat/meow");
   return (
     <div>
       <h1>Use Hooks</h1>
       <br />
-      <input {...useInput} placeholder="what's your name" />
+      <input {...name} placeholder="what's your name" />
       <br />
       {loading && <span>loading your cat</span>}
       {!loading && error && <span>{error}</span>}
