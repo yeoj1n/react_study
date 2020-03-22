@@ -1,0 +1,109 @@
+setState 를 사용해야 새로운 state를 가지고 render 함수를 호출한다. 
+
+this.state 를 사용하는 대신 current 를 사용하는 것이 좋다.
+  add = () => {
+    //this.setState({count : this.state.count + 1})
+    // this.setState(() => {
+    //   return {count : this.state.count + 1}
+    // })
+    this.setState(current => ({count: current.count + 1}))
+  }
+
+  minus = () => {
+    //this.setState({count : this.state - 1})
+    // this.setState(() => {
+    //   return {count : this.state.count -1 }
+    // })
+    this.setState(current => ({ count : current.count - 1}))
+  }
+  
+  
+  React.component
+  -> life cycle을 가지고 있다.
+  life cycle method : component를 생성하고 없애는 방법
+  
+  mounting : born
+	constructor : js에서 온 것이
+	componentDidMount() : component 가 render 된 후!
+	
+	
+  updating : state를 변경하는 것
+	shouldComponentUpdate(): 업데이트를 할지말지 결정하는 것으로 setState를 할때마다 실행된다.
+	componentDidUpdate() : render 후 호출
+  
+  unmouting : component가 죽는 것 (페이지 교체)
+	componentWillUnmount
+	
+	
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log("constructor")
+  }
+
+  state = {
+    count : 0,
+    testNumber: 4
+  }
+  
+  add = () => {
+    //this.setState({count : this.state.count + 1})
+    // this.setState(() => {
+    //   return {count : this.state.count + 1}
+    // })
+    this.setState(current => ({count: current.count + 1}))
+  };
+
+  minus = () => {
+    //this.setState({count : this.state - 1})
+    // this.setState(() => {
+    //   return {count : this.state.count -1 }
+    // })
+    this.setState(current => ({ count : current.count - 1}))
+  };
+
+
+  componentDidMount() {
+    console.log("componentDidMount")
+  }
+  
+  componentDidUpdate() {
+    console.log("componentDidUpdate")
+  }
+
+  render() {
+    console.log("render")
+    return (
+      <Fragment>
+        <div>
+          <button onClick={this.add}> + </button>
+          <button onClick={this.minus}> - </button>
+        </div>
+
+        <h1> count : {this.state.count}</h1>
+      </Fragment>
+      )
+    }
+  
+}
+
+export default App;	
+
+
+
+
+
+axios.get 이 항상 속도가 빠른 것은 아니다. 그렇기 때문에 페이지를 로딩할 때 데이터를 가지고 오고 싶다면 
+ componentDidMount에게 현재 데이터를 가져오는 중이라는 것을 알려야한다.
+ 
+  비동기 함수 async await 사용
+   getMovies = async () => {
+    const movies = await axios.get('https://yts.mx/api/v2/list_movies.json')
+  }
+
+  async componentDidMount() {
+    this.getMovies();
+  }
+  
+ 
+
