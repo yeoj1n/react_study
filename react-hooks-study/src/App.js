@@ -185,36 +185,56 @@ function App() {
 //   );
 // };
 
-const App = () => {
-  const sayHello = () => console.log("hello!");
-  const [number, setNumber] = useState(0);
-  const [aNumber, setAnumber] = useState(0);
+// const App = () => {
+//   const sayHello = () => console.log("hello!");
+//   const [number, setNumber] = useState(0);
+//   const [aNumber, setAnumber] = useState(0);
   
   
-  // componentDidMount 
-  // useEffect(() => {
-  //   sayHello();
-  // }, []);
+//   // componentDidMount 
+//   // useEffect(() => {
+//   //   sayHello();
+//   // }, []);
 
-  // componentDidMount + componentDidUpdate
-  // useEffect(() => {
-  //   sayHello();
-  // });
+//   // componentDidMount + componentDidUpdate
+//   // useEffect(() => {
+//   //   sayHello();
+//   // });
 
-  // componentDidMount + number state가 바뀌는 경우의 componentDidUpdate
-  useEffect(() => {
-    sayHello();
-  }, [aNumber]);
-  return (
-    <>
-      <div>{number}</div><br/>
-      <div>{aNumber}</div>
-      <button onClick={() => setNumber(number + 1)}>+</button>
-      <button onClick={() => setAnumber(aNumber + 2)}>-</button>
-    </>
-  )
+//   // componentDidMount + number state가 바뀌는 경우의 componentDidUpdate
+//   useEffect(() => {
+//     sayHello();
+//   }, [aNumber]);
+//   return (
+//     <>
+//       <div>{number}</div><br/>
+//       <div>{aNumber}</div>
+//       <button onClick={() => setNumber(number + 1)}>+</button>
+//       <button onClick={() => setAnumber(aNumber + 2)}>-</button>
+//     </>
+//   )
 
 
+// }
+
+const useTitle = initialTitle => {
+  const [title, setTitle] = useState(initialTitle);
+  const updateTitle = () => {
+    const htmlTitle = document.querySelector("title");
+    htmlTitle.innerText = title;
+  };
+
+  useEffect(updateTitle, [title]);
+  return setTitle;
 }
+
+const App = () => {
+  const titleUpdater = useTitle("Loading");
+  setTimeout(() => titleUpdater("home!"), 3000);
+  return(
+    <>hi</>
+  );
+}
+
 
 export default App;
