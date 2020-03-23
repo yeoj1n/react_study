@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from "react";
 import "./App.css";
-import axios from 'axios';
-import useInput from './useInput';
+import axios from "axios";
+//import useInput from "./useInput";
 
 /*
 class 타입
@@ -98,7 +98,7 @@ const App = () => {
   );
 };
 */
-
+/*
 function useFetch(url) {
   const [payload, setPayload] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -145,5 +145,76 @@ function App() {
       {!loading && payload && <img src={payload.files} />}
     </div>
   );
+  }
+*/
+
+// useTab example
+// const content = [
+//   {
+//     tab: "section1",
+//     content: "content 1"
+//   },
+//   {
+//     tab: "section2",
+//     content: "content 2"
+//   }
+// ];
+
+
+
+// const useTabs = (initialTab, allTabs) => {
+//   if (!allTabs || Array.isArray(allTabs)) {
+//     return;
+//   }
+//   const [currentIndex, setCurrentIndex] = useState(initialTab);
+//   return {
+//     currentItem: allTabs[currentIndex],
+//     changeItem : setCurrentIndex
+//   };
+// };
+// const App = () => {
+//   //const tabs = useTabs(0, content);
+//   const { currnetItem, changeItem } = useTabs(0, content);
+//   return (
+//     <div>
+//       {content.map((section, idx) => (
+//         <button>{() => changeItem(idx)}>{section.tab}</button>
+//       ))}
+//       {currnetItem.content}
+//     </div>
+//   );
+// };
+
+const App = () => {
+  const sayHello = () => console.log("hello!");
+  const [number, setNumber] = useState(0);
+  const [aNumber, setAnumber] = useState(0);
+  
+  
+  // componentDidMount 
+  // useEffect(() => {
+  //   sayHello();
+  // }, []);
+
+  // componentDidMount + componentDidUpdate
+  // useEffect(() => {
+  //   sayHello();
+  // });
+
+  // componentDidMount + number state가 바뀌는 경우의 componentDidUpdate
+  useEffect(() => {
+    sayHello();
+  }, [aNumber]);
+  return (
+    <>
+      <div>{number}</div><br/>
+      <div>{aNumber}</div>
+      <button onClick={() => setNumber(number + 1)}>+</button>
+      <button onClick={() => setAnumber(aNumber + 2)}>-</button>
+    </>
+  )
+
+
 }
+
 export default App;
