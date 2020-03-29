@@ -347,36 +347,48 @@ function App() {
 // };
 
 // useScroll
-const useScroll = () => {
-  const [Y, setY] = useState(0);
-  // const onScroll = () => {
-  //   setY(window.scrollY);
-  // }
-  // useEffect(() => {
-  //   window.addEventListener("scroll", onScroll);
-  //   return () =>
-  //     window.removeEventListener("scroll", onScroll);
-  // }, []);
-  // return Y;
-  
-  useEffect(() => {
-    // window.~EventListener(event, function);
-    window.addEventListener("scroll", () => {setY(window.scrollY)});
-    return() => window.removeEventListener("scroll", () => {setY(window.scrollY)})
-  },[])
-  return Y;
-};
+// const useScroll = () => {
+//   const [Y, setY] = useState(0);
+// const onScroll = () => {
+//   setY(window.scrollY);
+// }
+// useEffect(() => {
+//   window.addEventListener("scroll", onScroll);
+//   return () =>
+//     window.removeEventListener("scroll", onScroll);
+// }, []);
+// return Y;
 
+//   useEffect(() => {
+//     // window.~EventListener(event, function);
+//     window.addEventListener("scroll", () => {setY(window.scrollY)});
+//     return() => window.removeEventListener("scroll", () => {setY(window.scrollY)})
+//   },[])
+//   return Y;
+// };
+
+// const App = () => {
+//   const Y = useScroll();
+//   console.log(Y)
+//   return (
+//     <div style={{ height: "1000vh" }}>
+//       <h1 style={{ position: "fixed", color: Y > 100 ? "red" : "blue" }}>
+//         hello
+//       </h1>
+//     </div>
+//   );
+// };
+
+import useAxios from "./useAxios";
 const App = () => {
-  const Y = useScroll();
-  console.log(Y)
-  return (
-    <div style={{ height: "1000vh" }}>
-      <h1 style={{ position: "fixed", color: Y > 100 ? "red" : "blue" }}>
-        hello
-      </h1>
-    </div>
-  );
+  const { loading, data, error, refetch } = useAxios({
+    url: "https://yts.am/api/v2/list_movies.json"
+  });
+  console.log(`loading : ${loading} \n error : ${error} \n data: ${JSON.stringify(data)}`);
+  return <div>
+    <h2> {data && data.status}</h2>
+    <h2>{loading && `Loading`}</h2>
+    <button onClick={refetch}>Refetch</button>
+  </div>;
 };
-
 export default App;
