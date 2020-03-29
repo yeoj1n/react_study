@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component, useState, useEffect, useRef } from "react";
 import "./App.css";
 import axios from "axios";
 //import useInput from "./useInput";
@@ -160,8 +160,6 @@ function App() {
 //   }
 // ];
 
-
-
 // const useTabs = (initialTab, allTabs) => {
 //   if (!allTabs || Array.isArray(allTabs)) {
 //     return;
@@ -189,9 +187,8 @@ function App() {
 //   const sayHello = () => console.log("hello!");
 //   const [number, setNumber] = useState(0);
 //   const [aNumber, setAnumber] = useState(0);
-  
-  
-//   // componentDidMount 
+
+//   // componentDidMount
 //   // useEffect(() => {
 //   //   sayHello();
 //   // }, []);
@@ -214,27 +211,172 @@ function App() {
 //     </>
 //   )
 
-
+// }
+// useTitle : Head의 title 변경 (componentDidMount + componentDidUpdate)
+// const useTitle = (initialTitle) => {
+//   const [title, setTitle] = useState(initialTitle);
+//   const updateTitle = () => {
+//     const htmlTitle = document.querySelector("title");
+//     htmlTitle.innerText = title;
+//   }
+//   useEffect(updateTitle, [title]);
+//   return setTitle;
 // }
 
-const useTitle = initialTitle => {
-  const [title, setTitle] = useState(initialTitle);
-  const updateTitle = () => {
-    const htmlTitle = document.querySelector("title");
-    htmlTitle.innerText = title;
-  };
+// const App = () => {
+//   const titleUpater = useTitle("Loading");
+//   setTimeout(() => {
+//     titleUpater("HOME")
+//   }, 2000);
+//   return(
+//     <div className="App">
 
-  useEffect(updateTitle, [title]);
-  return setTitle;
-}
+//       <div>Hi!</div>
+//     </div>
+//   );
+// }
+
+// useClick
+// const useClick = onClick => {
+//   const element = useRef();
+//   useEffect(() => {
+//     if(element.current) {// element.current가 있을 때
+//       element.current.addEventListener("click", onClick);
+//     }
+
+//     // return 시켜줄 때 componentWillUnmount 된다.
+//     return() => {
+//       element.current.removerEventListener("click", onClick);
+//     }
+//   }, []); // componentDidUpdate 하고 싶지않으면 빈 배열 반환
+
+//   return element;
+// }
+
+// const App = () => {
+//   const sayHello = () => console.log("say hello");
+//   const title = useClick(sayHello);
+
+//   return(
+//     <div className="App">
+//       <h1 ref={title}>Hi</h1>
+//     </div>
+//   )
+// }
+
+// useConfirm
+// const useConfirm = (message = "", onConfirm, onCancle) => {
+//   if (!onConfirm || typeof onConfirm !== "function") return;
+//   if (onCancle && typeof onCancle !== "function") return;
+
+//   const confirmAction = () => {
+//     if (window.confirm(message)) {
+//       onConfirm();
+//     } else {
+//       onCancle();
+//     }
+//   };
+//   return confirmAction;
+// };
+
+// const App = () => {
+//   const confirmDelete = useConfirm(
+//     "Are you sure?",
+//     () => {
+//       console.log("delete word");
+//     },
+//     () => {
+//       console.log("abort");
+//     }
+//   );
+
+//   return (
+//     <div className="App">
+//       <button onClick={confirmDelete}>Delete the button</button>
+//     </div>
+//   );
+// };
+
+// usePreventLeave
+// const usePreventLeave = () => {
+//   const listener = event => {
+//     event.preventDefault();
+//     event.returnValue = "";
+//   };
+//   const enablePrevent = () => {
+//     window.addEventListener("beforeunload", listener);
+//   };
+//   const disablePrevent = () => {
+//     window.removeEventListener("beforeunload", listener);
+//   };
+
+//   return { enablePrevent, disablePrevent };
+// };
+
+// const App = () => {
+//   const { enablePrevent, disablePrevent } = usePreventLeave();
+//   return (
+//     <div className="App">
+//       <button onClick={enablePrevent}>Protect</button>
+//       <button onClick={disablePrevent}>UnProtect</button>
+//     </div>
+//   );
+// };
+
+// useBeforeLeave
+// const useBeforeLeave = onBefore => {
+//   const handle = event => {
+//     onBefore();
+//   };
+//   useEffect(() => {
+//     document.addEventListener("mouseleave", handle);
+//     return () => document.removeEventListener("mouseleave", handle);
+//   });
+// };
+
+// const App = () => {
+//   const begForLife = () => {
+//     console.log("pls dont leave");
+//   };
+//   useBeforeLeave(begForLife);
+//   return (
+//     <div>
+//       <h1>hello</h1>
+//     </div>
+//   );
+// };
+
+// useScroll
+const useScroll = () => {
+  const [Y, setY] = useState(0);
+  // const onScroll = () => {
+  //   setY(window.scrollY);
+  // }
+  // useEffect(() => {
+  //   window.addEventListener("scroll", onScroll);
+  //   return () =>
+  //     window.removeEventListener("scroll", onScroll);
+  // }, []);
+  // return Y;
+  
+  useEffect(() => {
+    // window.~EventListener(event, function);
+    window.addEventListener("scroll", () => {setY(window.scrollY)});
+    return() => window.removeEventListener("scroll", () => {setY(window.scrollY)})
+  },[])
+  return Y;
+};
 
 const App = () => {
-  const titleUpdater = useTitle("Loading");
-  setTimeout(() => titleUpdater("home!"), 3000);
-  return(
-    <>hi</>
+  const Y = useScroll();
+  console.log(Y)
+  return (
+    <div style={{ height: "1000vh" }}>
+      <h1 style={{ position: "fixed", color: Y > 100 ? "red" : "blue" }}>
+        hello
+      </h1>
+    </div>
   );
-}
-
+};
 
 export default App;
