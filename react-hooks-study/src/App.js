@@ -379,16 +379,29 @@ function App() {
 //   );
 // };
 
-import useAxios from "./useAxios";
-const App = () => {
-  const { loading, data, error, refetch } = useAxios({
-    url: "https://yts.am/api/v2/list_movies.json"
-  });
-  console.log(`loading : ${loading} \n error : ${error} \n data: ${JSON.stringify(data)}`);
-  return <div>
-    <h2> {data && data.status}</h2>
-    <h2>{loading && `Loading`}</h2>
-    <button onClick={refetch}>Refetch</button>
-  </div>;
-};
+// import useAxios from "./useAxios";
+// const App = () => {
+//   const { loading, data, error, refetch } = useAxios({
+//     url: "https://yts.am/api/v2/list_movies.json"
+//   });
+//   console.log(`loading : ${loading} \n error : ${error} \n data: ${JSON.stringify(data)}`);
+//   return <div>
+//     <h2> {data && data.status}</h2>
+//     <h2>{loading && `Loading`}</h2>
+//     <button onClick={refetch}>Refetch</button>
+//   </div>;
+// };
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import InfiniteScroll from './InfiniteScroll'; 
+import InfiniteAndLazy from './InfiniteAndLazy';
+
+function App() {
+  return(
+    <Router>
+      <Route exact path="/infiniteScroll" component={InfiniteScroll}></Route>
+      <Route exact path="/test" component={InfiniteAndLazy}></Route>
+
+    </Router>
+  ) 
+}
 export default App;
