@@ -26,7 +26,9 @@ class App extendsComponent {
   }
 }
 */
+
 /*
+// hooks 사용
 const App = () => {
   // [value, how to modify value], useState : array returns
   const [count, setCount] = useState(0);
@@ -391,17 +393,48 @@ function App() {
 //     <button onClick={refetch}>Refetch</button>
 //   </div>;
 // };
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-import InfiniteScroll from './InfiniteScroll'; 
-import InfiniteAndLazy from './InfiniteAndLazy';
+// import {BrowserRouter as Router, Route} from 'react-router-dom';
+// import InfiniteScroll from './InfiniteScroll';
+// import InfiniteAndLazy from './InfiniteAndLazy';
 
-function App() {
-  return(
-    <Router>
-      <Route exact path="/infiniteScroll" component={InfiniteScroll}></Route>
-      <Route exact path="/test" component={InfiniteAndLazy}></Route>
+// function App() {
+//   return(
+//     <Router>
+//       <Route exact path="/infiniteScroll" component={InfiniteScroll}></Route>
+//       <Route exact path="/infiniteAndLazy" component={InfiniteAndLazy}></Route>
 
-    </Router>
-  ) 
-}
+//     </Router>
+//   )
+// }
+// export default App;
+
+import { useTitle } from "./components";
+const useTitle = (initState) => {
+  console.log("useTitle 호출");
+  console.log(initState)
+  const [title, setTitle] = useState(initState);
+
+  
+  const updateTitle = (initState) => {
+    const htmlTitle = document.querySelector("title");
+    htmlTitle.innerHTML = title;
+  };
+
+  useEffect(() => {
+    console.log("useEffect");
+    updateTitle();
+  }, [title]);
+
+  return setTitle; 
+};
+
+const App = () => {
+  const titleUpdate = useTitle("Loading");
+  setTimeout(() => titleUpdate("Home"), 3000);
+  return (
+    <div className="App">
+      <div>Hi</div>
+    </div>
+  );
+};
 export default App;
