@@ -1,6 +1,6 @@
-import React, { Component, useState, useEffect, useRef } from "react";
-import "./App.css";
-import axios from "axios";
+// import React, { Component, useState, useEffect, useRef } from "react";
+// import "./App.css";
+// import axios from "axios";
 //import useInput from "./useInput";
 
 /*
@@ -408,6 +408,8 @@ function App() {
 // }
 // export default App;
 
+/* 
+//useTitle
 import { useTitle } from "./components";
 const useTitle = (initState) => {
   console.log("useTitle 호출");
@@ -435,6 +437,131 @@ const App = () => {
     <div className="App">
       <div>Hi</div>
     </div>
+  );
+};
+export default App;
+ */
+
+/*
+import React, { useState } from "react";
+// 평균구하기 : 일반적 사용법
+const getAverage = (numbers) => {
+  if (numbers.length === 0) return 0;
+  const sum = numbers.reduce((a, b) => a + b);
+  return sum / numbers.length;
+};
+
+const Average = () => {
+  const [list, setList] = useState([]);
+  const [number, setNumber] = useState("");
+
+  const onChange = (e) => {
+    setNumber(e.target.value);
+  };
+
+  const onInsert = (e) => {
+    setList(list.concat(parseInt(number)));
+    setNumber("");
+  };
+
+  return (
+    <div>
+      <input value={number} onChange={onChange} />
+      <button onClick={onInsert}>등록</button>
+      <ul>
+        {list.map((value, idx) => (
+           <li key={idx}>{value}</li>
+          ))}
+      </ul>
+      <div>평균 : {getAverage(list)}</div>
+    </div>
+  );
+};
+*/
+
+// 평균구하기 : useMemo 사용
+/*
+import React, { useState, useMemo } from "react";
+
+const getAverage = (numbers) => {
+  if (numbers.length === 0) return 0;
+  const sum = numbers.reduce((a, b) => a + b);
+  return sum / numbers.length;
+};
+
+const Average = () => {
+  const [list, setList] = useState([]);
+  const [number, setNumber] = useState("");
+
+  const onChange = (e) => {
+    setNumber(e.target.value);
+  };
+
+  const onInsert = (e) => {
+    setList(list.concat(parseInt(number)));
+    setNumber("");
+  };
+
+  const avg = useMemo(() => getAverage(list), [list]);
+
+  return (
+    <div>
+      <input value={number} onChange={onChange} />
+      <button onClick={onInsert}>등록</button>
+      <ul>
+        {list.map((value, idx) => (
+           <li key={idx}>{value}</li>
+          ))}
+      </ul>
+      <div>평균 : {avg}</div>
+    </div>
+  );
+};
+*/
+
+import React, { useState, useMemo, useCallback, useRef } from "react";
+
+const getAverage = (numbers) => {
+  if (numbers.length === 0) return 0;
+  const sum = numbers.reduce((a, b) => a + b);
+  return sum / numbers.length;
+};
+
+const Average = () => {
+  const [list, setList] = useState([]);
+  const [number, setNumber] = useState("");
+  const inputEl = useRef(null)
+
+  const onChange = useCallback((e) => {
+    setNumber(e.target.value);
+  }, []);
+
+  const onInsert = useCallback((e) => {
+    setList(list.concat(parseInt(number)))
+    setNumber('')
+    inputEl.current.focus();
+  }, [number, list])
+
+  const avg = useMemo(() => getAverage(list), [list]);
+
+  return (
+    <div>
+      <input value={number} onChange={onChange} ref={inputEl}/>
+      <button onClick={onInsert}>등록</button>
+      <ul>
+        {list.map((value, idx) => (
+          <li key={idx}>{value}</li>
+        ))}
+      </ul>
+      <div>평균 : {avg}</div>
+    </div>
+  );
+};
+const App = () => {
+  return (
+    <>
+      <Average />
+    </>
   );
 };
 export default App;
